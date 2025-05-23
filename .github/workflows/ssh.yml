@@ -15,3 +15,6 @@ jobs:
           echo "${{ secrets.KEY }}" > key.pem
           chmod 600 key.pem
           ssh -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 "echo ✅ SUCCESS: connected as \$(whoami)"
+        script: |
+                    echo "✅ Logged into VM successfully"
+                    whoami
