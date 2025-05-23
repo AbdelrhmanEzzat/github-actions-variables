@@ -31,13 +31,13 @@ jobs:
             ls -la
 
             echo "[INFO] Pulling latest changes from dev branch..."
-            git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
+            sudo git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
 
             echo "[INFO] Installing dependencies..."
-            npm install --legacy-peer-deps || { echo "[ERROR] npm install failed"; exit 1; }
+            sudo npm install --legacy-peer-deps || { echo "[ERROR] npm install failed"; exit 1; }
 
             echo "[INFO] Building the Angular app..."
-            npm run build || { echo "[ERROR] Build failed"; exit 1; }
+            sudo npm run build || { echo "[ERROR] Build failed"; exit 1; }
 
             echo "[✅ SUCCESS] Deployment completed at \$(date)"
             echo "==============================================="
