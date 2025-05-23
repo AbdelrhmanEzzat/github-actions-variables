@@ -10,11 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Create key file from secret
+      - name: SSH into VM and run commands
         run: |
           echo "${{ secrets.KEY }}" > key.pem
           chmod 600 key.pem
-          ssh -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 "echo ✅ SUCCESS: connected as \$(whoami)"
-        script: |
-                    echo "✅ Logged into VM successfully"
-                    whoami
+          ssh -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
+            echo "✅ Logged into VM successfully"
+            whoami
+            echo "📂 Listing contents of ~:"
+            ls ~
+          EOF
