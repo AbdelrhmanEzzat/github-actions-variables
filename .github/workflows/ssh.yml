@@ -1,15 +1,17 @@
-name: SSH Working Deploy
+name: SSH Connection Test
 
 on:
   push:
+    branches:
+      - dev
 
 jobs:
-  deploy:
+  test-ssh:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Manual SSH to test connection
+      - name: Create key file from secret
         run: |
-          echo "${{ secrets.key }}" > key.pem
+          echo "${{ secrets.KEY }}" > key.pem
           chmod 600 key.pem
-          ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i key.pem ubuntu@195.15.194.78 "echo ✅ SUCCESS: Connected to remote VM"
+          ssh -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 "echo ✅ SUCCESS: connected as \$(whoami)"
