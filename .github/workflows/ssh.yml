@@ -11,30 +11,32 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: SSH into VM and Deploy TapgoUI-Kiosk
+      - name: Setup SSH key and Deploy
         run: |
+          echo "${{ secrets.KEY }}" > key.pem
+          chmod 600 key.pem
+
           ssh -tt -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
-          LOGFILE=~/tapgo-kiosk-deploy.log
-          {
-            echo "========== Deployment Started: \$(date) =========="
-            echo "Processing TapgoUI-Kiosk..."
+            LOGFILE=~/tapgo-kiosk-deploy.log
+            {
+              echo "========== Deployment Started: \$(date) =========="
+              echo "Processing TapgoUI-Kiosk..."
 
-            cd ~/TapgoUI-Kiosk || { echo "[ERROR] Directory TapgoUI-Kiosk not found"; exit 1; }
+              cd ~/TapgoUI-Kiosk || { echo "[ERROR] Directory TapgoUI-Kiosk not found"; exit 1; }
 
-            echo "[INFO] Pulling latest changes from dev branch..."
-            git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
+              echo "[INFO] Pulling latest changes from dev branch..."
+              git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
 
-            echo "[INFO] Installing dependencies..."
-            npm install --legacy-peer-deps || { echo "[ERROR] npm install failed"; exit 1; }
+              echo "[INFO] Installing dependencies..."
+              npm install --legacy-peer-deps || { echo "[ERROR] npm install failed"; exit 1; }
 
-            echo "[INFO] Building the Angular app..."
-            npm run build || { echo "[ERROR] Build failed"; exit 1; }
+              echo "[INFO] Building the Angular app..."
+              npm run build || { echo "[ERROR] Build failed"; exit 1; }
 
-            echo "[SUCCESS] Deployment completed at \$(date)"
-            echo "==============================================="
-          } >> "\$LOGFILE" 2>&1
+              echo "[SUCCESS] Deployment completed at \$(date)"
+              echo "==============================================="
+            } >> "\$LOGFILE" 2>&1
 
-          tail -n 10 "\$LOGFILE"
-          exit 0
-        EOF
-
+            tail -n 10 "\$LOGFILE"
+            exit 0
+          EOF
