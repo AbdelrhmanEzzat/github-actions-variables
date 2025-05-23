@@ -1,7 +1,9 @@
 name: Workflow Demo
 
-on: 
-  push
+on:
+  push:
+    branches:
+      - dev
 
 env:
   ACCESS_ID: ${{ secrets.ACCESS_ID }}

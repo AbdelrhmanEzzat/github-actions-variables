@@ -22,7 +22,7 @@ jobs:
               echo "========== Deployment Started: \$(date) =========="
               echo "Processing TapgoUI-Kiosk..."
 
-              cd TapgoUI-Kiosk || { echo "[ERROR] Directory TapgoUI-Kiosk not found"; exit 1; }
+              cd /home/TapgoUI-Kiosk || { echo "[ERROR] Directory TapgoUI-Kiosk not found"; exit 1; }
 
               echo "[INFO] Pulling latest changes from dev branch..."
               git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
