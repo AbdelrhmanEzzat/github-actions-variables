@@ -32,7 +32,7 @@ jobs:
 
             echo "[INFO] Listing files in TapgoUI-Kiosk directory..."
             ls -la
-
+            
             echo "[INFO] Pulling latest changes from dev branch..."
             sudo git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
 
@@ -41,6 +41,7 @@ jobs:
 
             echo "[INFO] Building the Angular app..."
             sudo npm run build || { echo "[ERROR] Build failed"; exit 1; }
+
 
             echo "[✅ SUCCESS] Deployment completed at \$(date)"
             echo "==============================================="
