@@ -1,19 +1,22 @@
 name: SSH Connection Test
+
 on:
   push:
     branches:
       - main
+
 jobs:
   test-ssh:
     runs-on: ubuntu-latest
+
     steps:
       - name: SSH into VM and run commands
         run: |
-          echo "{{ secrets.KEY }}" > key.pem
+          echo "${{ secrets.KEY }}" > key.pem
           chmod 600 key.pem
-          ssh -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
-            echo "Logged into VM successfully"
+          ssh -tt -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
+            echo "✅ Logged into VM successfully"
             whoami
-            echo  Listing contents of ~:"
+            echo "📂 Listing contents of ~:"
             ls ~
           EOF
