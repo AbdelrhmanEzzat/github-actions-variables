@@ -15,7 +15,10 @@ jobs:
           echo "${{ secrets.KEY }}" > key.pem
           chmod 600 key.pem
 
-          ssh -tt -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
+          ssh -tt -o ServerAliveInterval=60 -o ServerAliveCountMax=5 \
+              -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes \
+              ubuntu@195.15.196.113 << 'EOF'
+
             echo "✅ Logged into VM successfully"
             whoami
 
@@ -41,4 +44,7 @@ jobs:
 
             echo "[✅ SUCCESS] Deployment completed at \$(date)"
             echo "==============================================="
+
+            echo "[✅ FINISHED] Closing SSH connection."
+            exit 0
           EOF
