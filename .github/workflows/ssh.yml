@@ -2,8 +2,6 @@ name: SSH Working Deploy
 
 on:
   push:
-    branches:
-      - main
 
 jobs:
   deploy:
@@ -12,6 +10,6 @@ jobs:
     steps:
       - name: Manual SSH to test connection
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+          echo "${{ secrets.key }}" > key.pem
           chmod 600 key.pem
           ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i key.pem ubuntu@195.15.194.78 "echo ✅ SUCCESS: Connected to remote VM"
