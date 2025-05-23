@@ -1,4 +1,4 @@
-name: Deploy TapgoUI-Kiosk via SSH
+name: Deploy TapgoUI-Kiosk via SSHs
 
 on:
   push:
