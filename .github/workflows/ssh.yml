@@ -24,6 +24,9 @@ jobs:
 
               cd ~/TapgoUI-Kiosk || { echo "[ERROR] Directory TapgoUI-Kiosk not found"; exit 1; }
 
+              echo "[INFO] Listing files in TapgoUI-Kiosk directory..."
+              ls -la
+
               echo "[INFO] Pulling latest changes from dev branch..."
               git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
 
