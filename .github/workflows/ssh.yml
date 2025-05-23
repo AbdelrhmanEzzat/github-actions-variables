@@ -1,45 +1,19 @@
-name: Deploy TapgoUI-Kiosk via SSH abdo
-
+name: SSH Connection Test
 on:
   push:
     branches:
-      - main
-
+      - dev
 jobs:
-  deploy:
+  test-ssh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-
     steps:
-      - name: SSH into VM and Deploy TapgoUI-Kiosk
+      - name: SSH into VM and run commands
         run: |
-          echo "${{ secrets.KEY }}" > key.pem
+          echo "{{ secrets.KEY }}" > key.pem
           chmod 600 key.pem
-
-          ssh -tt -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
-            LOGFILE=~/tapgo-kiosk-deploy.log
-            {
-              echo "========== Deployment Started: \$(date) =========="
-              echo "Processing TapgoUI-Kiosk..."
-
-              cd ~/TapgoUI-Kiosk || { echo "[ERROR] Directory TapgoUI-Kiosk not found"; exit 1; }
-
-              echo "[INFO] Listing files in TapgoUI-Kiosk directory..."
-              ls -la
-
-              echo "[INFO] Pulling latest changes from dev branch..."
-              git pull origin dev || { echo "[ERROR] Git pull failed"; exit 1; }
-
-              echo "[INFO] Installing dependencies..."
-              npm install --legacy-peer-deps || { echo "[ERROR] npm install failed"; exit 1; }
-
-              echo "[INFO] Building the Angular app..."
-              npm run build || { echo "[ERROR] Build failed"; exit 1; }
-
-              echo "[SUCCESS] Deployment completed at \$(date)"
-              echo "==============================================="
-            } >> "\$LOGFILE" 2>&1
-
-            tail -n 10 "\$LOGFILE"
-            exit 0
+          ssh -i key.pem -o StrictHostKeyChecking=no -o IdentitiesOnly=yes ubuntu@195.15.196.113 << 'EOF'
+            echo "Logged into VM successfully"
+            whoami
+            echo  Listing contents of ~:"
+            ls ~
           EOF
