@@ -3,7 +3,7 @@ name: Deploy TapgoUI-Kiosk via SSHs
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   deploy:
