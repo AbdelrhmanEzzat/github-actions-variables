@@ -2,7 +2,7 @@ name: SSH Connection Test
 on:
   push:
     branches:
-      - dev
+      - main
 jobs:
   test-ssh:
     runs-on: ubuntu-latest
