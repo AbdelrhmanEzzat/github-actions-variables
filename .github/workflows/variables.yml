@@ -1,17 +1,17 @@
-name: Workflow Demo
+# name: Workflow Demo
 
-on:
-  push:
-    branches:
-      - dev
+# on:
+#   push:
+#     branches:
+#       - dev
 
-env:
-  ACCESS_ID: ${{ secrets.ACCESS_ID }}
+# env:
+#   ACCESS_ID: ${{ secrets.ACCESS_ID }}
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Echo ACCESS_ID
-      run: echo $ACCESS_ID
+#     steps:
+#     - name: Echo ACCESS_ID
+#       run: echo $ACCESS_ID
